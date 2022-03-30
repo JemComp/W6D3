@@ -6,16 +6,50 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(params.require(:user).permit(:name, :email))
-        @user.save!
-        render json: user
+        user = User.new(params.require(:user).permit(:name,:email))
+        # replace the `user_attributes_here` with the actual attribute keys
+
+        if user.save
+            render json: user 
+       else
+            render json: user.errors.full_messages, status: :unprocessable_entity
+       end
+            
+        
 
         # render json: params
     end
 
     def show 
-        render plain: params
+        @user = User.find_by(id: params[:id])
+        
+        if @user 
+            render json: @user
+        else
+            render plain: 'No Such User!', status: 404
+        end
     end
+
+    def update
+        @user = User.find_by(id: params[:id])
+
+        if @user.update(params.require(:user).permit(:name,:email))
+            redirect_to user_url(@user)
+        else 
+            render plain: 'No Such User!', status: 404
+        end
+    end
+
+    def destroy 
+        @user = User.find(params[:id])
+        @user.destroy
+        redirect_to users_url
+    end
+
+
+
+               
+            
 
 end
 # get "/users", to: "users#index"
