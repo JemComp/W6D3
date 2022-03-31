@@ -44,6 +44,7 @@ class ArtworksController < ApplicationController
         redirect_to artworks_url
     end
 
+    
 
 
     private
