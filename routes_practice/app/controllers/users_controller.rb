@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        user = User.new(params.require(:user).permit(:name,:email))
+        user = User.new(user_params)
         # replace the `user_attributes_here` with the actual attribute keys
 
         if user.save
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     def update
         @user = User.find_by(id: params[:id])
 
-        if @user.update(params.require(:user).permit(:name,:email))
+        if @user.update(user_params)
             redirect_to user_url(@user)
         else 
             render plain: 'No Such User!', status: 404
@@ -46,7 +46,11 @@ class UsersController < ApplicationController
         redirect_to users_url
     end
 
-
+    private
+    
+    def user_params
+       params.require(:user).permit(:name,:email)
+    end
 
                
             

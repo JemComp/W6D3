@@ -1,0 +1,8 @@
+class ChangeUser < ActiveRecord::Migration[5.2]
+  def change
+    rename_column :users, :name, :username
+    remove_column :users, :email
+
+  end
+    add_index :users, :name
+end
