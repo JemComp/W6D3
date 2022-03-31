@@ -8,10 +8,12 @@ Rails.application.routes.draw do
   get "/users/:id", to: "users#show", as: 'user'
   patch "/users/:id", to: "users#update"
   delete "/users/:id", to: "users#destroy"
-   
+
+  get "/users/:user_id/artworks", to: "artworks#index"
 
   # resources :users
-  resource :artworks only [:create, :destroy, :index, :show, :update]
+  resources :artworks, only: [:create, :destroy, :show, :update]
+  resources :artwork_shares, only: [:create, :destroy, :index, :show]
 end
 
 # Prefix Verb   URI Pattern                                                                              Controller#Action
