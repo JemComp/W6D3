@@ -11,6 +11,7 @@ Rails.application.routes.draw do
    
 
   # resources :users
+  resource :artworks only [:create, :destroy, :index, :show, :update]
 end
 
 # Prefix Verb   URI Pattern                                                                              Controller#Action
