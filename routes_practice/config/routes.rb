@@ -10,10 +10,22 @@ Rails.application.routes.draw do
   delete "/users/:id", to: "users#destroy"
 
   get "/users/:user_id/artworks", to: "artworks#index"
+  # get "/users/:user_id/comments", to: "comments#index"
+  # get "/users/:user/comments", to: "comments#index"
 
-  # resources :users
+
+  resources :users do 
+    resources :comments, only: [:index]
+  end
+
+  resources :artworks do
+    resources :comments, only: [:index]
+  end
+
   resources :artworks, only: [:create, :destroy, :show, :update]
   resources :artwork_shares, only: [:create, :destroy, :index, :show]
+  resources :comments, only: [:create, :destroy]
+  
 end
 
 # Prefix Verb   URI Pattern                                                                              Controller#Action
